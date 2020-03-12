@@ -1,0 +1,27 @@
+{
+    "name": "parshikovpavel/algorithmic-problems",
+    "description": "Some algorithmic problems and their solutions",
+    "keywords": ["algorithm", "program"],
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pavel Parshikov",
+            "email": "paw-p@yandex.ru",
+            "role": "Author"
+        }
+    ],
+    "support": {
+        "email": "paw-p@yandex.ru"
+    },
+    "require": {
+        "php": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "ppAlgorithm\\": ["src/", "tests/"]
+        }
+    },
+    "require-dev": {
+    }
+}
