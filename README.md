@@ -1,2 +1,3 @@
-# algorithmic-problems
-Some algorithmic problems and а description of their solution
+# Решение алгоритмических задач
+1. [Анаграммы](src/Anagrams/description.md)
+
