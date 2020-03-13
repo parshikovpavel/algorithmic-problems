@@ -22,15 +22,15 @@ class Solution2
 
         # проходим по первому массиву, для каждой очередной буквы инкрементируем соответствующий счетчик в dictionary
         for ($i = 0, $string1Length = strlen($string1); $i < $string1Length; $i++) {
-            $dictionary[ord($string1{$i}) - ord('a')]++;
+            $dictionary[ord($string1[$i]) - ord('a')]++;
         }
 
         # проходимся по второму массиву, для каждой очередной буквы декрементируем соответствующий счетчик в dictionary
         for ($i = 0; $i < $string1Length; $i++) {
-            $dictionary[ord($string2{$i}) - ord('a')]--;
+            $dictionary[ord($string2[$i]) - ord('a')]--;
 
             # если какой-либо из счетчиков стал `< 0` – строки не анаграммы
-            if ($dictionary[ord($string2{$i}) - ord('a')] < 0) {
+            if ($dictionary[ord($string2[$i]) - ord('a')] < 0) {
                 return false;
             }
         }

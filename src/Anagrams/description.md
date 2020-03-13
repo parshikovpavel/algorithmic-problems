@@ -35,7 +35,7 @@ count_chars ( string $string ) : mixed
 ]
 ```
 
-Программа:
+[Реализация](Solution1.php):
 
 ```php
 public function areAnagrams(string $string1, string $string2): bool
@@ -44,14 +44,41 @@ public function areAnagrams(string $string1, string $string2): bool
 }
 ```
 
+[Тесты](./../../tests/Anagrams/Solution1Test.php)
+
 ## Решение 2
 
 Построим *dictionary* вручную без функции `count_chars()`.
 
-Алгоритм:
+[Реализация](Solution2.php):
 
-- если строки разной длины – они не анаграммы
-- выделяем память под *dictionary* – `array` на 26 элементов (с учетом, что строка состоит только из английских символов)
-- проходим по первому массиву, для каждой очередной буквы инкрементируем соответствующий счетчик в *dictionary*
-- проходимся по второму массиву, для каждой очередной буквы декрементируем соответствующий счетчик в *dictionary*
-- если какой-либо из счетчиков стал `< 0` – cnhjrb 
+```php
+# если строки разной длины – они не анаграммы
+if (strlen($string1) !== strlen($string2)) {
+    return false;
+}
+
+# выделяем память под dictionary – массив на 26 элементов (с учетом, что строка состоит только из английских символов)
+$dictionary = array_fill(0, 26, 0);
+
+# проходим по первому массиву, для каждой очередной буквы инкрементируем соответствующий счетчик в dictionary
+for ($i = 0, $string1Length = strlen($string1); $i < $string1Length; $i++) {
+    $dictionary[ord($string1[$i]) - ord('a')]++;
+}
+
+# проходимся по второму массиву, для каждой очередной буквы декрементируем соответствующий счетчик в dictionary
+for ($i = 0; $i < $string1Length; $i++) {
+    $dictionary[ord($string2[$i]) - ord('a')]--;
+
+    # если какой-либо из счетчиков стал `< 0` – строки не анаграммы
+    if ($dictionary[ord($string2[$i]) - ord('a')] < 0) {
+        return false;
+    }
+}
+
+# если ни один из счетчиков не стал `<0`, т.е. они все были успешно декрементрованы назад в 0 – строки анаграммы
+return true;
+```
+
+[Тесты](./../../tests/Anagrams/Solution2Test.php)
+
