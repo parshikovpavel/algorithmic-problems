@@ -10,6 +10,9 @@ class Solution2Test extends TestCase
 
     /**
      * @dataProvider data
+     * @param string $string1
+     * @param string $string2
+     * @param bool $expected
      */
     public function testAreAnagrams(string $string1, string $string2, bool $expected): void
     {
