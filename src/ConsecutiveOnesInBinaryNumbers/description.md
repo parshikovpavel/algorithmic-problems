@@ -84,5 +84,5 @@ public function getLength(int $n): int
 }
 ```
 
-[Тесты](./../../tests/LongestOneSeries/SolutionTest.php)
+[Тесты](./../../tests/ConsecutiveOnesInBinaryNumbers/SolutionTest.php)
 

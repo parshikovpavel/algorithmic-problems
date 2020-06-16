@@ -21,22 +21,22 @@
 
 ```php
 public function getLength(array $series): int
-    {
-        $maxLength = 0;
-        $currentLength = 0;
+{
+    $maxLength = 0;
+    $currentLength = 0;
 
-        foreach ($series as $digit) {
-            if ($digit === 1) {
-                $currentLength++;
-                $maxLength = max($maxLength, $currentLength);
-            }
-            else {
-                $currentLength = 0;
-            }
+    foreach ($series as $digit) {
+        if ($digit === 1) {
+            $currentLength++;
+            $maxLength = max($maxLength, $currentLength);
         }
-
-        return $maxLength;
+        else {
+            $currentLength = 0;
+        }
     }
+
+    return $maxLength;
+}
 ```
 
 [Тесты](./../../tests/LongestOneSeries/SolutionTest.php)
