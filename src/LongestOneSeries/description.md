@@ -8,8 +8,8 @@
 
 Необходимо пройтись по всем элементам массива. 
 
-- Встретив единицу, нужно увеличить счётчик длины текущей последовательности.
-- Встретив ноль, нужно обнулить этот счётчик. И проверить, не является ли длина текущей последовательности – наибольшей. Если она наибольшая – то сохранить ее.
+- Встретив единицу, нужно увеличить счётчик длины текущей последовательности. Если длина текущей последовательности – больше максимальной, то сохранить ее как максимальную.
+- Встретив ноль, нужно обнулить этот счётчик. 
 
 В конце нужно вывести значение длины наибольшей последовательности.
 
@@ -20,10 +20,23 @@
 [Реализация](Solution.php):
 
 ```php
-public function areAnagrams(string $string1, string $string2): bool
-{
-    return count_chars($string1) == count_chars($string2);
-}
+public function getLength(array $series): int
+    {
+        $maxLength = 0;
+        $currentLength = 0;
+
+        foreach ($series as $digit) {
+            if ($digit === 1) {
+                $currentLength++;
+                $maxLength = max($maxLength, $currentLength);
+            }
+            else {
+                $currentLength = 0;
+            }
+        }
+
+        return $maxLength;
+    }
 ```
 
 [Тесты](./../../tests/LongestOneSeries/SolutionTest.php)
