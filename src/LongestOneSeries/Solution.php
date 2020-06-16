@@ -17,11 +17,9 @@ class Solution
         foreach ($series as $digit) {
             if ($digit === 1) {
                 $currentLength++;
+                $maxLength = max($maxLength, $currentLength);
             }
             else {
-                if ($currentLength > $maxLength) {
-                    $maxLength = $currentLength;
-                }
                 $currentLength = 0;
             }
         }

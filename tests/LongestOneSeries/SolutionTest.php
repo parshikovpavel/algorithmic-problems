@@ -24,7 +24,7 @@ class SolutionTest extends TestCase
     /**
      * @dataProvider data
      * @param array $series
-     * @param bool $expected
+     * @param int $expected
      */
     public function testGetLength(array $series, int $expected): void
     {
