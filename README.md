@@ -3,5 +3,6 @@
 2. [Самая длинная последовательность единиц](src/LongestOneSeries/description.md)
 3. [Consecutive 1's in Binary Numbers](src/ConsecutiveOnesInBinaryNumbers/description.md)
 4. [Совпадающие символы](src/IdenticalCharacters/description.md)
+5. [Удаление дубликатов](src/DeletingDuplicates/description.md)
 
 

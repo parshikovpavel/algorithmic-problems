@@ -15,7 +15,25 @@
 [Реализация](Solution.php):
 
 ```php
+public function getNumberOfIdenticalCharacters(string $a, string $b): int
+{
+    $set = [];
+    $aLength = strlen($a);
+    $bLength = strlen($b);
+    $number = 0;
 
+    for ($i = 0; $i < $aLength; $i++) {
+        $set[$a[$i]] = true;
+    }
+
+    for ($i = 0; $i < $bLength; $i++) {
+        if (isset($set[$b[$i]])) {
+            $number++;
+        }
+    }
+
+    return $number;
+}
 ```
 
 [Тесты](./../../tests/IdenticalCharacters/SolutionTest.php)
