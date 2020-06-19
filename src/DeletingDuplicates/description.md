@@ -6,20 +6,26 @@
 
 ## Решение
 
-Необходимо перебирать обрабатывает элементы массива, сравнивая их с последним выведенным. Нужно не забыть обновлять переменную, содержащую последний выведенный элемент и, кроме того, не ошибиться при обработке последнего элемента.
-
-
-
-При решении этой задачи также не нужно использовать дополнительную память.
+Необходимо перебирать элементы массива, сравнивая текущий элемент с предшествующим. Если текущий элемент `!==` предшествующему, то записать его в массив-результат. 
 
 [Реализация](Solution.php):
 
 ```php
-public function areAnagrams(string $string1, string $string2): bool
+public function deleteDuplicates(array $array): array
 {
-    return count_chars($string1) == count_chars($string2);
+    $result = [];
+    $current = null;
+
+    foreach ($array as $element) {
+        if ($element !== $current) {
+            $result[] = $element;
+            $current = $element;
+        }
+    }
+
+    return $result;
 }
 ```
 
-[Тесты](./../../tests/DuplicateDeleting/SolutionTest.php)
+[Тесты](./../../tests/DeletingDuplicates/SolutionTest.php)
 

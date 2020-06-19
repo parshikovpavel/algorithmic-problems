@@ -9,7 +9,7 @@ class Solution
      * @param array $array Sorted array
      * @return array Array without duplicates
      */
-    public function getNumberOfIdenticalCharacters(array $array): array
+    public function deleteDuplicates(array $array): array
     {
         $result = [];
         $current = null;
