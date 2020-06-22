@@ -8,6 +8,8 @@
 
 ## LeetCode
 
-22. [(22) Generate Parentheses (правильные скобочные последовательности)](src/GenerateParentheses/description.md)
+1. [(1) Two Sum](src/TwoSum/description.md)
+
+1. [(22) Generate Parentheses (правильные скобочные последовательности)](src/GenerateParentheses/description.md)
 
 
