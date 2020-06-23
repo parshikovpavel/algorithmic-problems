@@ -30,7 +30,7 @@ Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 ```
 
-| #    | Время              | Память                   |
+| #    | Time               | Space                    |
 | ---- | ------------------ | ------------------------ |
 | 1    | *O(N<sup>2</sup>)* | *O(1)*                   |
 | 2    | *O(N)*             | *O(N)* (для *Hashtable*) |
@@ -88,3 +88,32 @@ public function twoSum(array $nums, int $target): array
 ```
 
 [Тесты](./../../tests/TwoSum/Solution2Test.php)
+
+## Один проход с Hashtable
+
+Алгоритм:
+
+- Так же как и в предыдущем случае, проходим по `$nums` и строим *Hashtable* по *value*'s. 
+- На каждой итерации, не дожидаясь окончания цикла, сразу же пытаемся найти в *Hashtable* такое *value*, которое дополняет `$nums[$i]` до `$target`, т.е. равное `$target - $nums[$i]`. Т.к. этот поиск выполняется до вставки текущего *value* в *Hashtable*, проверка что `$i !== $j` не требуется.
+
+[Реализация](Solution3.php):
+
+```php
+public function twoSum(array $nums, int $target): array
+{
+    $hashtable = [];
+
+    foreach ($nums as $key => $value) {
+        $complement = $target - $value;
+        if (isset($hashtable[$complement])) {
+            return [$hashtable[$complement], $key];
+        }
+        $hashtable[$value] = $key;
+    }
+
+    throw new \Exception();
+}
+```
+
+[Тесты](./../../tests/TwoSum/Solution3Test.php)
+

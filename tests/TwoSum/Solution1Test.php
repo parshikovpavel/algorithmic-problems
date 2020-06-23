@@ -13,6 +13,7 @@ class Solution1Test extends TestCase
      * @param array $nums
      * @param int $target
      * @param array $expected
+     * @throws \Exception
      */
     public function testGenerate(array $nums, int $target, array $expected): void
     {

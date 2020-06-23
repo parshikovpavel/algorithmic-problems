@@ -4,7 +4,7 @@ namespace ppAlgorithm\TwoSum;
 
 use PHPUnit\Framework\TestCase;
 
-class Solution2Test extends TestCase
+class Solution3Test extends TestCase
 {
     use Provider;
 
@@ -17,7 +17,7 @@ class Solution2Test extends TestCase
      */
     public function testGenerate(array $nums, int $target, array $expected): void
     {
-        $keys = (new Solution2())->twoSum($nums, $target);
+        $keys = (new Solution3())->twoSum($nums, $target);
         $this->assertSame($expected, $keys);
     }
 }
