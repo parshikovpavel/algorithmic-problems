@@ -9,6 +9,7 @@
 ## LeetCode
 
 1. [(1) Two Sum](src/TwoSum/description.md)
+2. [(2) Add Two Numbers](src/AddTwoNumbers/description.md)
 
 1. [(22) Generate Parentheses (правильные скобочные последовательности)](src/GenerateParentheses/description.md)
 
