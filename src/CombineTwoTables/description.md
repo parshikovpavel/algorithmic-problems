@@ -37,41 +37,13 @@ FirstName, LastName, City, State
 
 ## Решение
 
-Перебираем символы строки и для каждого символа считаем количество открытых на данный момент скобок `$opening` и количество закрытых скобок `$closing`. 
-
-Строка будет валидна, если:
-
-- если для каждого символа `$opening >= $closing`
-- и в конце строки `$opening === $closing`
-
-| #    | Время  | Память |
-| ---- | ------ | ------ |
-| 1    | `O(N)` | `O(1)` |
-
 [Реализация](Solution.php):
 
-```php
-public function check(string $sequence): bool
-{
-    $opening = 0;
-    $closing = 0;
-    $length = strlen($sequence);
-
-    for ($i = 0; $i < $length; $i++) {
-        if ($sequence[$i] === '(') {
-            $opening++;
-        }
-        else {
-            $closing++;
-        }
-        if ($opening < $closing) {
-            return false;
-        }
-    }
-
-    return $opening === $closing;
-}
+```mysql
+SELECT LastName, FirstName, City, State
+FROM Person LEFT JOIN Address USING (PersonId)
+ORDER BY PersonId
 ```
 
-[Тесты](./../../tests/CheckParentheses/SolutionTest.php)
+[Тесты](./../../tests/CombineTwoTables/SolutionTest.php)
 

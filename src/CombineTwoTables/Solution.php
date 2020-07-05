@@ -10,8 +10,9 @@ class Solution
     public function combine(Connection $connection): ITable
     {
         $sql = '
-            SELECT FirstName, LastName, City, State
-            FROM Person LEFT JOIN Address USING (AddressId)
+            SELECT LastName, FirstName, City, State
+            FROM Person LEFT JOIN Address USING (PersonId)
+            ORDER BY PersonId
             ';
 
         return $connection->createQueryTable(

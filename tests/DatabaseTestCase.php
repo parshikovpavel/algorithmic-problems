@@ -5,6 +5,7 @@ namespace ppAlgorithm;
 use PDO;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
+use PHPUnit\DbUnit\DataSet\ArrayDataSet;
 
 abstract class DatabaseTestCase extends TestCase
 {
@@ -26,5 +27,10 @@ abstract class DatabaseTestCase extends TestCase
         }
 
         return $this->conn;
+    }
+
+    final public function getDataSet()
+    {
+        return new ArrayDataSet([]);
     }
 }
