@@ -1,6 +1,6 @@
 <?php
 
-namespace ppAlgorithm\CombineTwoTables;
+namespace ppAlgorithm\SecondHighestSalary;
 
 use PHPUnit\DbUnit\Database\Connection;
 use PHPUnit\DbUnit\DataSet\ITable;
@@ -10,9 +10,13 @@ class Solution
     public function select(Connection $connection): ITable
     {
         $sql = '
-            SELECT LastName, FirstName, City, State
-            FROM Person LEFT JOIN Address USING (PersonId)
-            ORDER BY PersonId
+            SELECT (
+                SELECT Salary
+                FROM Employee
+                ORDER BY Salary DESC
+                LIMIT 1
+                OFFSET 1 
+            ) AS subquery
             ';
 
         return $connection->createQueryTable(

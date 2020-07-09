@@ -17,6 +17,22 @@ abstract class DatabaseTestCase extends TestCase
     // сохранить экземпляр PHPUnit\DbUnit\Database\Connection для других Test case's
     private $conn = null;
 
+    /**
+     * @var array Массив вида [ `tableName` => columns, ... ]
+     */
+    protected array $tables;
+
+    final protected function setUp(): void
+    {
+        $sql = '';
+
+        foreach ($this->tables as $tableName => $columns) {
+            $sql .= "CREATE TABLE IF NOT EXISTS $tableName ($columns); TRUNCATE TABLE $tableName; ";
+        }
+
+        $this->getConnection()->getConnection()->exec($sql);
+    }
+
     final public function getConnection()
     {
         if ($this->conn === null) {
@@ -27,6 +43,43 @@ abstract class DatabaseTestCase extends TestCase
         }
 
         return $this->conn;
+    }
+
+    final protected function tearDown(): void
+    {
+        $sql = '';
+
+        foreach ($this->tables as $tableName => $columns) {
+            $sql .= "DROP TABLE $tableName; ";
+        }
+
+        $this->getConnection()->getConnection()->exec($sql);
+    }
+
+    /**
+     * Провайдер данных
+     * @return array
+     */
+    abstract public function data(): array;
+
+    /**
+     * @dataProvider data
+     * @param array $fixture
+     * @param array $expected
+     */
+    public function testQuery(array $fixture, array $expected): void
+    {
+
+        $this->getDatabaseTester()->setSetUpOperation($this->getSetUpOperation());
+        $this->getDatabaseTester()->setDataSet(
+            new ArrayDataSet($fixture)
+        );
+        $this->getDatabaseTester()->onSetUp();
+        $solutionClassName = str_replace('Test', '', static::class);
+        $actual = (new $solutionClassName())->select($this->getConnection());
+        $expected = (new ArrayDataSet($expected))->getTable('result');
+
+        $this->assertTablesEqual($expected, $actual);
     }
 
     final public function getDataSet()

@@ -10,7 +10,8 @@
 
 1. [(1) Two Sum](src/TwoSum/description.md)
 2. [(2) Add Two Numbers](src/AddTwoNumbers/description.md)
-1. [(22) Generate Parentheses (правильные скобочные последовательности)](src/GenerateParentheses/description.md)
-4. [(175) Combine Two Tables]()
+3. [(22) Generate Parentheses (правильные скобочные последовательности)](src/GenerateParentheses/description.md)
+4. [(175) Combine Two Tables](src/CombineTwoTables/description.md)
+5. [(176) Second Highest Salary](src/SecondHighestSalary/description.md)
 
 
