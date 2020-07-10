@@ -54,23 +54,35 @@ For example, given the above Employee table, the query should return `200` as th
 
 Чтобы возвращать `NULL`, если в таблице только одна строка, можно:
 
-1. Использовать коррелированный подзапрос в блоке `SELECT`:
+1. Использовать коррелированный подзапрос в блоке `SELECT` ([Реализация](Solution.php) + [Тесты](./../../tests/SecondHighestSalary/SolutionTest.php))
 
    ```mysql
-   
+   SELECT (
+       SELECT DISTINCT Salary
+       FROM Employee
+       ORDER BY Salary DESC
+       LIMIT 1
+       OFFSET 1 
+   ) AS SecondHighestSalary
    ```
-
-   
 
 2. Поместить коррелированный подзапрос в `IFNULL()`
 
-[Реализация](Solution.php):
+   ```mysql
+   SELECT IFNULL((
+       SELECT DISTINCT Salary
+       FROM Employee
+       ORDER BY Salary DESC
+       LIMIT 1
+       OFFSET 1 
+   ), NULL) AS SecondHighestSalary
+   ```
+
+:
 
 ```mysql
-SELECT LastName, FirstName, City, State
-FROM Person LEFT JOIN Address USING (PersonId)
-ORDER BY PersonId
+
 ```
 
-[Тесты](./../../tests/CombineTwoTables/SolutionTest.php)
+
 

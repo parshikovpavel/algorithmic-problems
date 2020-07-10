@@ -5,18 +5,18 @@ namespace ppAlgorithm\SecondHighestSalary;
 use PHPUnit\DbUnit\Database\Connection;
 use PHPUnit\DbUnit\DataSet\ITable;
 
-class Solution
+class Solution2
 {
     public function select(Connection $connection): ITable
     {
         $sql = '
-            SELECT (
-                SELECT Salary
+            SELECT IFNULL((
+                SELECT DISTINCT Salary
                 FROM Employee
                 ORDER BY Salary DESC
                 LIMIT 1
                 OFFSET 1 
-            ) AS subquery
+            ), NULL) AS SecondHighestSalary
             ';
 
         return $connection->createQueryTable(

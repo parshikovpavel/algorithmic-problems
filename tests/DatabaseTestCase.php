@@ -17,16 +17,11 @@ abstract class DatabaseTestCase extends TestCase
     // сохранить экземпляр PHPUnit\DbUnit\Database\Connection для других Test case's
     private $conn = null;
 
-    /**
-     * @var array Массив вида [ `tableName` => columns, ... ]
-     */
-    protected array $tables;
-
     final protected function setUp(): void
     {
         $sql = '';
 
-        foreach ($this->tables as $tableName => $columns) {
+        foreach ($this->tables() as $tableName => $columns) {
             $sql .= "CREATE TABLE IF NOT EXISTS $tableName ($columns); TRUNCATE TABLE $tableName; ";
         }
 
@@ -49,7 +44,7 @@ abstract class DatabaseTestCase extends TestCase
     {
         $sql = '';
 
-        foreach ($this->tables as $tableName => $columns) {
+        foreach ($this->tables() as $tableName => $columns) {
             $sql .= "DROP TABLE $tableName; ";
         }
 
@@ -61,6 +56,11 @@ abstract class DatabaseTestCase extends TestCase
      * @return array
      */
     abstract public function data(): array;
+
+    /**
+     * @return array Массив вида [ `tableName` => columns, ... ]
+     */
+    abstract protected function tables(): array;
 
     /**
      * @dataProvider data

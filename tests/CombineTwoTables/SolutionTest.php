@@ -7,10 +7,13 @@ use PHPUnit\DbUnit\DataSet\ArrayDataSet;
 
 class SolutionTest extends DatabaseTestCase
 {
-    protected array $tables = [
-        'Person' => 'PersonId int, FirstName varchar(255), LastName varchar(255)',
-        'Address' => 'AddressId int, PersonId int, City varchar(255), State varchar(255)',
-    ];
+    protected function tables(): array
+    {
+        return [
+            'Person' => 'PersonId int, FirstName varchar(255), LastName varchar(255)',
+            'Address' => 'AddressId int, PersonId int, City varchar(255), State varchar(255)',
+        ];
+    }
 
     public function data(): array
     {

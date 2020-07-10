@@ -13,5 +13,6 @@
 3. [(22) Generate Parentheses (правильные скобочные последовательности)](src/GenerateParentheses/description.md)
 4. [(175) Combine Two Tables](src/CombineTwoTables/description.md)
 5. [(176) Second Highest Salary](src/SecondHighestSalary/description.md)
+6. [(177) Nth Highest Salary](src/NthHighestSalary/description.md)
 
 
