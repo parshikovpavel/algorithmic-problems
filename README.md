@@ -14,5 +14,6 @@
 4. [(175) Combine Two Tables](src/CombineTwoTables/description.md)
 5. [(176) Second Highest Salary](src/SecondHighestSalary/description.md)
 6. [(177) Nth Highest Salary](src/NthHighestSalary/description.md)
+7. [(178) Rank Scores](src/RankScores/description.md)
 
 
