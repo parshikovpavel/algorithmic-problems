@@ -68,16 +68,60 @@ For example, given the above `Scores` table, your query should generate the foll
 
 Важное замечание: Для MySQL, чтобы избежать использования зарезервированных слов в качестве  имен столбцов, вы можете использовать апостроф до и после ключевого слова. Например \`Rank\`.
 
-## Решение
+## Решение 1
 
+Используются переменные MySQL.
 
+- `@prev_score` – хранит предыдущее значение `Score` для того, и если `@prev_score = Score`, то `Rank` повышать не нужно, иначе нужно инкрементировать `Rank`
+- `@rank` – хранит текущее значение `Rank`. `@rank` инкрементируется при каждом изменении `Score`.
 
-[Реализация](Solution.php)
+[Реализация](Solution1.php)
 
-```php
-
-
+```mysql
+SELECT Score, `Rank`
+FROM (
+    SELECT 
+    	Score,
+    	@rank := if(@prev_score = Score, @rank, @rank + 1) AS `Rank`,
+    	@prev_score := Score AS Dummy   
+    FROM Scores,
+    	(SELECT @rank := 0, @prev_score := -1) as t
+    ORDER BY Score DESC
+) x
 ```
 
-[Тесты](./../../tests/NthHighestSalary/SolutionTest.php)
+
+
+## Решение 2
+
+Используем коррелированный подзапрос в блоке `SELECT`. Будем искать количество уникальных `Score` – `COUNT(distinct Score)`, для которых значение `Score` больше и равно текущему значению.
+
+[Реализация](Solution2.php)
+
+```mysql
+SELECT Score, 
+    (
+        SELECT COUNT(distinct Score) FROM Scores S2 WHERE S2.Score >= S1.Score
+    ) AS Rank
+FROM Scores S1
+ORDER BY Score DESC
+```
+
+
+
+## Решение 3
+
+Сделаем `INNER JOIN` на таблицу с уникальными значениями `Score` – `SELECT DISTINCT Score FROM Scores`, причем присоединим те строки из нее, для которых `S1.Score <= S2.Score`. В итоге количество присоединенных строк будет равно искомому `Rank`. Осталось сгруппировать объединенную таблицу по `Id` из основной таблицы (`S1.Id`) и сделать `COUNT(*)`
+
+[Реализация](Solution3.php)
+
+```mysql
+SELECT S1.Score, 
+    COUNT(*) AS Rank
+FROM Scores S1 INNER JOIN (
+    SELECT DISTINCT Score FROM Scores
+    ) S2 ON S1.Score <= S2.Score     
+GROUP BY S1.Id, S1.Score
+ORDER BY S1.Score DESC
+```
 
