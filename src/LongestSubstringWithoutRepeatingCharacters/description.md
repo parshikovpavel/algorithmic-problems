@@ -58,38 +58,67 @@ Explanation: Ответ "wke", с длиной 3.
              Заметьте, что ответ должен быть подстрокой, "pwke" - это набор символов, а не подстрока.
 ```
 
-## Решение
+## Решение 1. Brute force
 
+Организуем полный перебор всех подстрок в строке. Для этого делаем два вложенных цикла: `i = 0 ÷ length-1`, `j = i ÷ length -1`.
 
+Для каждой подстроки проверяем, что все символы в подстроке - уникальны. Используем функцию `areCharsUnique()`.
 
-| #    | Время         | Память        |
-| ---- | ------------- | ------------- |
-| 1    | `O(max(m,n))` | `O(max(m,n))` |
-
-[Реализация](Solution.php):
+[Реализация](Solution1.php):
 
 ```php
-function addTwoNumbers(ListNode $l1, ListNode $l2): ListNode
-{
-    $head = $current = new ListNode();
-    $carry = 0;
-    while ($l1 !== null || $l2 !== null || $carry !== 0) {
-        $val1 = $l1 !== null ? $l1->val : 0;
-        $val2 = $l2 !== null ? $l2->val : 0;
-        $sum = $val1 + $val2 + $carry;
-        $current->next = new ListNode($sum % 10);
-        $current = $current->next;
-        $carry = intdiv($sum, 10);
-        if ($l1 !== null) {
-            $l1 = $l1->next;
+/**
+     * Найти максимальную длину подстроки без повторения символов
+     * @param string $s
+     * @return int
+     */
+    public function lengthOfLongestSubstring(string $s): int
+    {
+        $lengthS = strlen($s);
+        $maxLength = 0;
+        for ($i = 0; $i < $lengthS; $i++) {
+            for ($j = $i; $j < $lengthS; $j++) {
+                $substring = substr($s, $i, $j - $i + 1);
+                if ($this->areCharsUnique($substring)) {
+                    $maxLength = max($maxLength, strlen($substring));
+                }
+            }
         }
-        if ($l2 !== null) {
-            $l2 = $l2->next;
-        }
+
+        return $maxLength;
     }
-    return $head->next;
-}
+
+    /**
+     * Проверить, являются ли все символы в строке уникальными
+     * @param string $s
+     * @return bool
+     */
+    public function areCharsUnique(string $s): bool
+    {
+        $set = [];
+        $lengthS = strlen($s);
+        for ($i = 0; $i < $lengthS; $i++) {
+            if (isset($set[$s[$i]])) {
+                return false;
+            }
+            else {
+                $set[$s[$i]] = 1;
+            }
+        }
+
+        return true;
+    }
 ```
 
-[Тесты](./../../tests/AddTwoNumbers/SolutionTest.php)
+[Тесты](./../../tests/LongestSubstringWithoutRepeatingCharacters/Solution1Test.php)
+
+## Решение 2. Sliding window
+
+[Sliding window](https://github.com/parshikovpavel/cheat-sheets/blob/master/Algorithm.md#sliding-window)
+
+
+
+| #    | Время              | Память |
+| ---- | ------------------ | ------ |
+| 1    | *O(n<sup>3</sup>)* | *O(n)* |
 
