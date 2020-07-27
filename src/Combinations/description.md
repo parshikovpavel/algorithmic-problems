@@ -1,60 +1,31 @@
-# 78. Generate subsets of distinct integers
+# 77. Combinations
 
 ## Condition
 
-Given a set of **distinct** integers, *nums*, return all possible subsets (the power set).
-
-**Note:** The solution set must not contain duplicate subsets.
+Given two integers *n* and *k*, return all possible combinations of *k* numbers out of 1 ... *n*.
 
 **Example:**
 
 ```
-Input: nums = [1,2,3]
+Input: n = 4, k = 2
 Output:
 [
-  [3],
-  [1],
-  [2],
-  [1,2,3],
-  [1,3],
+  [2,4],
+  [3,4],
   [2,3],
   [1,2],
-  []
+  [1,3],
+  [1,4],
 ]
 ```
 
 ## Условие
 
-Дан *set* **различных** целых чисел, вернуть все возможные *subset*'s (включая пустой *subset*) – т.н. [power set]()
-
-**Примечание.** Решение не должен содержать одинаковых *subset*'s.
-
-**Пример:**
-
-```
-Input: nums = [1,2,3]
-Output:
-[
-  [3],
-  [1],
-  [2],
-  [1,2,3],
-  [1,3],
-  [2,3],
-  [1,2],
-  []
-]
-```
+TODO
 
 ## Решение 1. Cascading (каскадирование)
 
-Для *set* длиной *n* – размер *power set 2<sup>n</sup>*.
-
-Изначально в списке `$subsets` один пустой массив `[]`. 
-
-- На первом шаге выбираем первый элемент из `$set` и присоединяем его ко всем *subset*'s, которые уже сохранены в `$subsets`.
-- На втором шаге выбираем второй элемент из `$set`  и также присоединяем его ко всем *subset*'s. 
-- и т.д.
+- TODO
 
 [Реализация](Solution1.php):
 
