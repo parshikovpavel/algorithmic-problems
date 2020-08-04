@@ -22,46 +22,149 @@ Output : 1 2 3
 
 ## Условие
 
-TODO
+Даны два целых числа *n* и *k*, вернуть все возможные *combination*'s' из *k* чисел из множества 1 ... *n*.
 
-## Решение 1 
+**Пример:**
 
-В цикле берем очередное число, фиксируем его и рекурсивно вызываем функцию для подбора оставшихся k-1 чисел. Для того чтобы комбинации не повторялись
+```
+Input: n = 5, k = 3
+Output : 1 2 3 
+         1 2 4 
+         1 2 5 
+         1 3 4 
+         1 3 5 
+         1 4 5 
+         2 3 4 
+         2 3 5 
+         2 4 5 
+         3 4 5
+```
+
+## Решение 1. Backtracking
+
+Используем рекурсию:
+
+- *base case* – текущий размер *Combination* `$current_k` достиг требуемого размера `$k`.
+
+- *recursive case*. Перебираем в цикле числа из *set*'а, начиная с позиции `$start` – позиция после числа, взятого на предыдущем шаге рекурсии (в этом случае не возможны повторения *combination*'s). Перебор продолжаем, пока не переберем все числа до `$n`, либо не останется в *set* достаточно чисел, чтобы получить Combination размера `$k`. 
+
+  Добавляем очередное число `$i` в текущую комбинацию `$current_combination`, вызываем функцию рекурсивно, при этом стартовая позиция для очередного перебора  `$i + 1`. 
+
+Например для случая, `n = 5` и `k = 3`, исходный *set* – `[1, 2, 3, 4, 5]`.
+
+- Выбираем `1`  и вызываем рекурсивно функцию для добавления чисел, начиная с `2` и т.д. В итоге получаем `{1,2,3}`, `{1,2,4}`, `{1,2,5}`, `{1,3,4}`, `{1,4,5}`.
+- Выбираем `2`  и вызываем рекурсивно функцию для добавления чисел, начиная с `3` и т.д. В итоге получаем `{2,3,4}`, `{2,3,5}`, `{2,4,5}`.
+- Выбираем `3` и вызываем рекурсивно функцию для добавления чисел, начиная с `4` и т.д. В итоге получаем `{3, 4, 5}`.
+- Перебор останавливаем, т.к. *Combination*'s размера `3`, начинающихся с чисел `4` и `5`, – нет. 
+
+![combination_1](https://parshikovpavel.github.io/img/algorithmicProblems/combinations_1.jpeg)
 
 [Реализация](Solution1.php):
 
 ```php
-public function generateSubsets(array $set): array
+(new Solution1())->generateCombinations($n, $k, 0, 0, [], $combinations);
+
+class Solution1
 {
-    $subsets = [
-        [],
-    ];
-
-    foreach ($set as $element) {
-        $newSubsets = [];
-
-        foreach ($subsets as $subset) {
-            $subset[] = $element;
-            $newSubsets[] = $subset;
+    /**
+     * Сгенерировать все возможные combination's длиной $k для чисел от 1..$n
+     * @param int $n
+     * @param int $k Требуемый размер combination
+     * @param int $start С какого элемента начинать итерировать на текущей итерации
+     * @param int $current_k Текущий размер combination
+     * @param array $current_combination Текущая combination
+     * @param array $combinations Найденные combination's
+     * @return void
+     */
+    public function generateCombinations(int $n, int $k, int $start, int $current_k, array $current_combination, array &$combinations): void
+    {
+        # base case – текущий размер Combination `$current_k` достиг требуемого размера `$k`.
+        if ($current_k === $k) {
+            $combinations[] = $current_combination;
+            return;
         }
 
-        $subsets = array_merge($subsets, $newSubsets);
-    }
+        # recursive case.
+        # Перебираем в цикле числа из set'а, начиная с позиции `$start` – позиция после числа, взятого на 
+        # предыдущем шаге рекурсии (в этом случае не возможны повторения *combination*'s).
+        # Перебор продолжаем, пока не переберем все числа до `$n`, либо не останется в set достаточно чисел,
+        # чтобы получить Combination размера `$k`.
+        for ($i = $start; $i < $n && $k - $current_k <= $n - $i; $i++) {
+            # Добавляем очередное число `$i` в текущую комбинацию `$current_combination`,
+            $current_combination[$current_k] = $i + 1;
 
-    return $subsets;
+            # вызываем функцию рекурсивно, при этом стартовая позиция для очередного перебора  `$i + 1`. 
+            $this->generateCombinations($n, $k, $i + 1, $current_k + 1, $current_combination, $combinations);
+        }
+    }
 }
 ```
 
-![subset_1](https://parshikovpavel.github.io/img/algorithmicProblems/subsets_1.jpg)
+Количество *k-combination*'s из *n* элементов обозначается *C<sub>n</sub><sup>k</sup>*. ([1](https://github.com/parshikovpavel/cheat-sheets/blob/master/Algorithm.md#combination))
 
-**Time complexity**: *O(N×2<sup>N</sup>)*, т.к. всего *2<sup>n</sup>* *subset*'ов и каждый из них размером N нужно скопировать в выходной `$subsets`
+*C<sub>n</sub><sup>k</sup>=(n!) / (k!⋅(n-k)!)*
 
-**Space complexity**: *O(N×2<sup>N</sup>)*. Т.к. всего *2<sup>n</sup>* *subset*'ов, каждый из которых имеет длину N. 
+**Time complexity**: *O(k × C<sub>n</sub><sup>k</sup>)*, т.к. всего *k × C<sub>n</sub><sup>k</sup>*  шагов в дереве поиска (на рисунке видно).
 
-## Решение 2. Backtracking
+**Space complexity**: *O(k × C<sub>n</sub><sup>k</sup>)*. Т.к. всего есть *C<sub>n</sub><sup>k</sup>* *combination*'s, каждая из которых имеет длину *k*. 
 
-[Backtracking](https://github.com/parshikovpavel/cheat-sheets/blob/master/Algorithm.md#backtracking)
+## Решение 2. Включение/исключение элемента
 
-*Powerset* – это все возможные *combination*'s всех возможных *длин* от 0 до n.
+Это просто преобразование *iteration* в *recursion* (1)
 
-Поэтому необходимо организовать цикл по всем длинам от 0 до n,  и сгенеририровать все возможные *combination*'s для каждой длины. Можно использовать любую технику из задачи [77. Combinations]()
+Не перебираем, как в предыдущем случае, все элементы от `$start` до `$n` на текущем шаге рекурсии. На текущем шаге рекурсии только подставляем значение с индексом `$start`. Значение с индексом `$start+1` подставляется на следующем витке рекурсии. 
+
+![combination_2](https://parshikovpavel.github.io/img/algorithmicProblems/combinations_2.jpeg)
+
+```php
+(new Solution2())->generateCombinations($n, $k, 0, 0, [], $combinations);
+
+class Solution2
+{
+    /**
+     * Сгенерировать все возможные combination's длиной $k для чисел от 1..$n
+     * @param int $n
+     * @param int $k Требуемый размер combination
+     * @param int $start С какого элемента начинать итерировать на текущей итерации
+     * @param int $current_k Текущий размер combination
+     * @param array $current_combination Текущая combination
+     * @param array $combinations Найденные combination's
+     * @return void
+     */
+    public function generateCombinations(int $n, int $k, int $start, int $current_k, array $current_combination, array &$combinations): void
+    {
+        # base case's
+
+        # 1. в set недостаточно чисел, чтобы получить Combination размера `$k`
+        if ($k - $current_k > $n - $start) {
+            # Возвращаемся без сохранения combination
+            return;
+        }
+
+        # 2. Если найдена combination размера $k
+        if ($current_k === $k) {
+            # Сохраняем найденную combination
+            $combinations[] = $current_combination;
+            return;
+        }
+
+        # сохранить текущее значение в combination
+        $current_combination[$current_k] = $start + 1;
+        # продолжить подставлять числа, начиная с индекса `$start+1`, при этом длина combination 
+        # увеличилась `$current_k+1`
+        $this->generateCombinations($n, $k, $start + 1, $current_k + 1, $current_combination, $combinations);
+
+        # можно `unset($current_combination[$current_k])`, но не обязательно, т.к. на следующем рекурсивном 
+        # вызове это значение будет перезаписано
+        # также продолжить подставлять числа, начиная с индекса `$start+1`, но при этом длина combination 
+        # НЕ увеличилась `$current_k`
+        $this->generateCombinations($n, $k, $start + 1, $current_k, $current_combination, $combinations);
+    }
+}
+```
+
+**Time complexity**: *O(2<sup>n</sup>)*, т.к. для каждого элемента есть две возможности: будет ли он выбран на текущем шаге рекурсии или нет. Получается *O(2 × 2 × ... ×2).
+
+**Space complexity**: *O(k × C<sub>n</sub><sup>k</sup>)*. Т.к. всего есть *C<sub>n</sub><sup>k</sup>* *combination*'s, каждая из которых имеет длину *k*. 
+
+## Решение 3. Битовые операции

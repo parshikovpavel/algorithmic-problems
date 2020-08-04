@@ -4,7 +4,7 @@ namespace ppAlgorithm\Combinations;
 
 use PHPUnit\Framework\TestCase;
 
-class Solution1Test extends TestCase
+class Solution2Test extends TestCase
 {
     use Provider;
 
@@ -17,7 +17,7 @@ class Solution1Test extends TestCase
     public function testGenerateCombinations(int $n, int $k, array $expected): void
     {
         $combinations = [];
-        (new Solution1())->generateCombinations($n, $k, 0, 0, [], $combinations);
+        (new Solution2())->generateCombinations($n, $k, 0, 0, [], $combinations);
         sort($combinations);
         sort($expected);
 
