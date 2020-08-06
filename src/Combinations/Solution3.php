@@ -2,20 +2,63 @@
 
 namespace ppAlgorithm\Combinations;
 
-class Solution2
+class Solution3
 {
     /**
      * Сгенерировать все возможные combination's длиной $k для чисел от 1..$n
      * @param int $n
      * @param int $k Требуемый размер combination
-     * @param int $start С какого элемента начинать итерировать на текущей итерации
-     * @param int $current_k Текущий размер combination
-     * @param array $current_combination Текущая combination
-     * @param array $combinations Найденные combination's
-     * @return void
+     * @return array $combinations Найденные combination's
      */
-    public function generateCombinations(int $n, int $k): void
+    public function generateCombinations(int $n, int $k): array
     {
+        $combinations = [];
+        # Заполняем массив `$bits` стартовой битовой последовательность (`$k` единиц в начале, остальное - 0)
+        $bits = array_fill(0, $k, 1) + array_fill($k, $n - $k, 0);
+        while (true) {
+            # Выводим текущую combination в результат
+            $combination = [];
+            for ($i = 0; $i < $n; $i++) {
+                # Если соответствующий бит = 1, то добавляем в combination число
+                if ($bits[$i] === 1) {
+                    $combination[] = $i + 1;
+                }
+            }
+            $combinations[] = $combination;
 
+            # Число бит 1 до первого бита 0 слева
+            $one_number = 0;
+            # перебираем биты слева-направо
+            # до тех пор, пока нам встречаются 1
+            # либо еще не попадалось ни одной 1 (например, для case [0, 1, 1, 0, 1] на первом шаге)
+            for ($i = 0; $i < $n && ($bits[$i] === 1 || $one_number === 0); $i++) {
+                # если попался бит 1, увеличиваем счетчик `$one_number`
+                if ($bits[$i] === 1) {
+                    $one_number++;
+                }
+            }
+
+            # если прошли до конца битовой последовательности - переставлять больше нечего
+            # битовая последовательность начинает с 0 и заканчивается 1 - [0,0,0,1,1]
+            if ($i === $n) break;
+
+            # устанавливаем первый слева бит 0 в значение 1
+            $bits[$i] = 1;
+
+            # слева от замененного бита пишем лексикографически максимальное значение с условием,
+            # что общее количество 1 будет не больше `$k`.
+            # Для этого нам нужно слева оставить `$one_number - 1` единиц (т.к. одну 1 мы уже использовали, когда установили бит)
+            # Лексикографически максимальное значение - то, у которого слева идут 1, а после них 0
+            for ($j = 0; $j < $i; $j++) {
+                if ($j < $one_number - 1) {
+                    $bits[$j] = 1;
+                }
+                else {
+                    $bits[$j] = 0;
+                }
+            }
+        }
+
+        return $combinations;
     }
 }
