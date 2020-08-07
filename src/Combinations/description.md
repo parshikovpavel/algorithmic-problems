@@ -40,6 +40,8 @@ Output : 1 2 3
          3 4 5
 ```
 
+[Combination](https://github.com/parshikovpavel/cheat-sheets/blob/master/Algorithm.md#combination)
+
 ## Решение 1. Backtracking
 
 Используем рекурсию:

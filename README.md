@@ -13,11 +13,12 @@
 3. [(3) Longest Substring Without Repeating Characters](src/LongestSubstringWithoutRepeatingCharacters/description.md)
 4. [(5) Longest Palindromic Substring](src/LongestPalindromicSubstring/description.md)
 5. [(22) Generate Parentheses (правильные скобочные последовательности)](src/GenerateParentheses/description.md)
-6. [(77) Combinations](src/Combinations/description.md)
-7. [(78) Generate subsets of distinct integers](src/GenerateSubsetsOfDistinctIntegers/description.md)
-8. [(175) Combine Two Tables](src/CombineTwoTables/description.md)
-9. [(176) Second Highest Salary](src/SecondHighestSalary/description.md)
-10. [(177) Nth Highest Salary](src/NthHighestSalary/description.md)
-11. [(178) Rank Scores](src/RankScores/description.md)
+6. [(46) Permutations](src/Permutations/description.md)
+7. [(77) Combinations](src/Combinations/description.md)
+8. [(78) Generate subsets of distinct integers](src/GenerateSubsetsOfDistinctIntegers/description.md)
+9. [(175) Combine Two Tables](src/CombineTwoTables/description.md)
+10. [(176) Second Highest Salary](src/SecondHighestSalary/description.md)
+11. [(177) Nth Highest Salary](src/NthHighestSalary/description.md)
+12. [(178) Rank Scores](src/RankScores/description.md)
 
 
